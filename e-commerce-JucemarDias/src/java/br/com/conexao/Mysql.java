@@ -20,7 +20,7 @@ public class Mysql {
             String database = "e-commerce";
             String url = "jdbc:mysql://" + serverName + "/" + database;
             String username = "root";
-            String password = "";
+            String password = "root";
 
             connection = DriverManager.getConnection(url, username, password);
 
