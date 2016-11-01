@@ -10,6 +10,12 @@ import br.com.controller.LoginController;
 public class ServletLogin extends HttpServlet {
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/index.jsp").forward(req, resp);
+    }
+
+    
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -20,9 +26,10 @@ public class ServletLogin extends HttpServlet {
             response.addCookie(LoginController.getCookie("usuario", usuario));
             response.addCookie(LoginController.getCookie("senha", senha));
 
-            response.sendRedirect("/e-commerce/main.jsp");
+            response.sendRedirect("/e-commerce-JucemarDias/main.jsp");
         } else {
-            response.sendRedirect("/e-commerce");
+            
+            doGet(request, response);
         }
     }
 
