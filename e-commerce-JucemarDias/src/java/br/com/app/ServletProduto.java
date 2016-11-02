@@ -1,124 +1,103 @@
 package br.com.app;
 
+import br.com.controller.ProdutoDAO;
+import br.com.modelo.Produto;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import br.com.conexao.Mysql;
-import br.com.controller.ProdutoDAO;
-import br.com.modelo.Produto;
-import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ServletProduto extends HttpServlet {
 
-    Produto produto = new Produto();
-    ProdutoDAO produtoDAO = new ProdutoDAO();
+    /**
+     * Confira se sua tabela está igual a esta
+     */
+    private String createTable = "CREATE TABLE IF NOT EXISTS `produto` (\n"
+            + "  `idproduto` INT NOT NULL AUTO_INCREMENT,\n"
+            + "  `descricao` VARCHAR(200) NOT NULL,\n"
+            + "  `quantidade` DOUBLE NULL,\n"
+            + "  `valor` DOUBLE NULL,\n"
+            + "  PRIMARY KEY (`idproduto`));";
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-
-        String acao = req.getParameter("acao");
-        String idproduto = req.getParameter("idproduto");
-
-        switch (acao) {
-            case "listar":
-                listarProdutos(req, resp);
-                break;
-
-            case "editar":  {
-                editarProduto(req, resp, idproduto);
-            }
-            break;
-
-            case "excluir":
-                excluirProduto(req, resp, idproduto);
-                break;
-        }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        String idproduto = req.getParameter("idproduto");
-        String descricao = req.getParameter("descricao");
-        String quantidade = req.getParameter("quantidade");
-        String valor = req.getParameter("valor");
-
-        if (!idproduto.equals("")) {
-            produto.setIdProduto(Integer.parseInt(idproduto));
-        }
-        produto.setDescricao(descricao);
-        produto.setQuantidade(quantidade);
-        produto.setValor(Double.parseDouble(valor));
-
-        if (idproduto.equals("")) {
-            cadastrarProduto(produto, req, resp);
-        } else {
-            try {
-                editarProduto(produto, req, resp);
-            } catch (SQLException ex) {
-                Logger.getLogger(ServletProduto.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
-    private void cadastrarProduto(Produto produto, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (!produto.getDescricao().equals("")) {
-            try {
-                produtoDAO.inserir(produto);;
-                listarProdutos(req, resp);
-            } catch (SQLException ex) {
-                Logger.getLogger(ServletProduto.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
-    private void listarProdutos(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        /*
+         Crie um método no DAO para facilitar a recuperação dos parâmetros
+         */
+        Produto produto = ProdutoDAO.getProdutoParametros(req);
         try {
-            Connection conexao = (Connection) req.getAttribute("conexao");
-            ProdutoDAO produtoDAO = new ProdutoDAO();
+            Connection conn = (Connection) req.getAttribute("conexao");
 
-            List<Produto> produtosList = produtoDAO.ConsultaGeral();
+            /*
+             Se o código é ZERO, então devemos Inserir o Produto, 
+             caso contrário é uma Alteração
+             */
+            if (produto.getIdProduto() == 0) {
+                incluirProduto(conn, produto);
+            } else {
+                alterarProduto(conn, produto);
+            }
 
-            req.setAttribute("produtos", produtosList);
-            /*Load or List*/
-        } catch (SQLException ex) {
-            Logger.getLogger(ServletProduto.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        req.getRequestDispatcher("/main.jsp").forward(req, resp);
-    }
-
-    private void excluirProduto(HttpServletRequest req, HttpServletResponse resp, String id) throws ServletException, IOException {
-        produto.setIdProduto(Integer.parseInt(id));
-        try {
-            produtoDAO.remover(produto);
-            listarProdutos(req, resp);
-        } catch (SQLException ex) {
-            Logger.getLogger(ServletProduto.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private void editarProduto(Produto produto, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        produtoDAO.atualizar(produto);
-        listarProdutos(req, resp);
-    }
-
-    private void editarProduto(HttpServletRequest req, HttpServletResponse resp, String id) throws ServletException, IOException {
-        produto.setIdProduto(Integer.parseInt(id));
-        {
+            /*
+             Após executar a operação, redireciona para a página de consulta.
+             Aqui pode ser utilizado SendRedirect, pois não é necessário enviar nenhum atributo para a página.
+             */
+            resp.sendRedirect("/CadastroProdutos/produto/consulta.jsp");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            /*
+             Se ocorrer algum erro ao tentar Salvar o produto, seja na Inclusão ou na Alteração, é enviada uma mensagem de erro e o produto de volta para a página.
+             O produto precisa ser enviado de volta, pois o formulário precisa ser preenchido novamente com os dados que o usuário acabou de informar.
+             */
+            String mensagemErro = "Não foi possível salvar este produto, tente novamente.";
+            req.setAttribute("mensagem_erro", mensagemErro);
             req.setAttribute("produto", produto);
-            req.getRequestDispatcher("/ProdutoAlt.jsp").forward(req, resp);
-
+            req.getRequestDispatcher("/produto/cadastro.jsp").forward(req, resp);
         }
+    }
+
+    private void alterarProduto(Connection conn, Produto produto) throws SQLException {
+        new ProdutoDAO(conn).alterar(produto);
+    }
+
+    private void incluirProduto(Connection conn, Produto produto) throws SQLException {
+        new ProdutoDAO(conn).inserir(produto);
+    }
+
+    /**
+     * doGet é chamado quando o usuário clica em "Alterar" na página de Consulta
+     * de Produtos
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            Connection conn = (Connection) req.getAttribute("conexao");
+            /*
+             Recupera o código passado por parâmetro e busca o produto a ser alterado no banco de dados
+             */
+            String codigoParam = req.getParameter("codigo");
+            Produto produto = new ProdutoDAO(conn).consultarPorCodigo(codigoParam);
+            /*
+             Envia o produto a ser alterado para a página JSP
+             */
+            req.setAttribute("produto", produto);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            String mensagemErro = "Não foi possível alterar este produto, tente novamente.";
+            req.setAttribute("mensagem_erro", mensagemErro);
+        }
+        /*
+         Encaminha a requisição e o produto para a página de cadastro.jsp
+         */
+        req.getRequestDispatcher("/produto/cadastro.jsp").forward(req, resp);
     }
 
 }

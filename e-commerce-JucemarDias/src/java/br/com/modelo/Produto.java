@@ -7,8 +7,21 @@ package br.com.modelo;
 public class Produto {
     private int idProduto;
     private String descricao;
-    private String quantidade;
+    private Double quantidade;
     private Double valor;
+    
+    public Produto() {
+        descricao = "";
+      
+    }
+
+    public Produto(int codigo, String descricao, Double quantidade, double valor) {
+        this.idProduto = idProduto;
+        this.descricao = descricao;
+        this.quantidade = quantidade;
+        this.valor = valor;
+       
+    }
 
     public int getIdProduto() {
         return idProduto;
@@ -26,11 +39,11 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public String getQuantidade() {
+    public Double getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(String quantidade) {
+    public void setQuantidade(Double quantidade) {
         this.quantidade = quantidade;
     }
 
