@@ -26,7 +26,7 @@ public class ServletLogin extends HttpServlet {
             response.addCookie(LoginController.getCookie("usuario", usuario));
             response.addCookie(LoginController.getCookie("senha", senha));
 
-            response.sendRedirect("/e-commerce-JucemarDias/main.jsp");
+            response.sendRedirect("/e-commerce-JucemarDias/cadastrarprodutos.jsp");
         } else {
             
             doGet(request, response);

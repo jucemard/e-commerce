@@ -36,9 +36,9 @@
         <br />
         <% }%>
 
-        <form method="POST" action="/e-commerce-JucemarDias/ServletProduto" >
+        <form method="POST" action="/e-commerce-JucemarDias/ServletProduto">
             <%-- Vamos manter o código como campo oculto, e usar um <span> para exibí-lo na tela :) --%>
-            <input type="text" name="codigo" value="<%=produto.getIdProduto()%>" hidden="hidden" />
+            <input type="text" name="idproduto" value="<%=produto.getIdProduto()%>" hidden="hidden" />
             Código: <span><%=produto.getIdProduto()%></span> <br />
             Descrição: <input type="text" name="descricao" value="<%=produto.getDescricao()%>" /> <br />
             Quantidade: <input type="text" name="quantidade" value="<%=produto.getQuantidade()%>" /> <br />

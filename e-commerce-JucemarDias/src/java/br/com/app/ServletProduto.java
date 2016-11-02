@@ -12,16 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ServletProduto extends HttpServlet {
 
-    /**
-     * Confira se sua tabela está igual a esta
-     */
-    private String createTable = "CREATE TABLE IF NOT EXISTS `produto` (\n"
-            + "  `idproduto` INT NOT NULL AUTO_INCREMENT,\n"
-            + "  `descricao` VARCHAR(200) NOT NULL,\n"
-            + "  `quantidade` DOUBLE NULL,\n"
-            + "  `valor` DOUBLE NULL,\n"
-            + "  PRIMARY KEY (`idproduto`));";
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         /*
@@ -45,7 +35,7 @@ public class ServletProduto extends HttpServlet {
              Após executar a operação, redireciona para a página de consulta.
              Aqui pode ser utilizado SendRedirect, pois não é necessário enviar nenhum atributo para a página.
              */
-            resp.sendRedirect("/CadastroProdutos/produto/consulta.jsp");
+            resp.sendRedirect("/e-commerce-JucemarDias/ServletProdutoList");
         } catch (Exception ex) {
             ex.printStackTrace();
             /*
@@ -55,7 +45,7 @@ public class ServletProduto extends HttpServlet {
             String mensagemErro = "Não foi possível salvar este produto, tente novamente.";
             req.setAttribute("mensagem_erro", mensagemErro);
             req.setAttribute("produto", produto);
-            req.getRequestDispatcher("/produto/cadastro.jsp").forward(req, resp);
+            req.getRequestDispatcher("/e-commerce-JucemarDias/cadastrarprodutos.jsp").forward(req, resp);
         }
     }
 
@@ -65,6 +55,7 @@ public class ServletProduto extends HttpServlet {
 
     private void incluirProduto(Connection conn, Produto produto) throws SQLException {
         new ProdutoDAO(conn).inserir(produto);
+        
     }
 
     /**
@@ -97,7 +88,7 @@ public class ServletProduto extends HttpServlet {
         /*
          Encaminha a requisição e o produto para a página de cadastro.jsp
          */
-        req.getRequestDispatcher("/produto/cadastro.jsp").forward(req, resp);
+        req.getRequestDispatcher("/e-commerce-JucemarDias/cadastrarprodutos.jsp").forward(req, resp);
     }
 
 }

@@ -39,7 +39,7 @@ public class ServletProdutoList extends HttpServlet {
             String mensagemErro = "Não foi possível excluir o produto, tente novamente.";
             req.setAttribute("mensagem_erro", mensagemErro);
         }
-        req.getRequestDispatcher("/produto/consulta.jsp").forward(req, resp);
+        req.getRequestDispatcher("/e-commerce-JucemarDias/listarprodutos.jsp").forward(req, resp);
     }
 
     private void consultar(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -53,7 +53,7 @@ public class ServletProdutoList extends HttpServlet {
             String mensagemErro = "Não foi possível realizar a consulta de produtos, tente novamente.";
             req.setAttribute("mensagem_erro", mensagemErro);
         }
-        req.getRequestDispatcher("/produto/consulta.jsp").forward(req, resp);
+        req.getRequestDispatcher("/e-commerce-JucemarDias/listarprodutos.jsp").forward(req, resp);
     }
 
 }
