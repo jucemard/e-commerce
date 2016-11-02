@@ -1,5 +1,12 @@
-<%@page import="br.grupointegrado.cadastroProduto.model.Produto"%>
+<%-- 
+    Document   : cadastrarprodutos
+    Created on : 02/11/2016, 18:41:16
+    Author     : Jucemar Dias
+--%>
+
+<%@page import="br.com.modelo.Produto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <%
     String mensagemErro = (String) request.getAttribute("mensagem_erro");
     Produto produto = (Produto) request.getAttribute("produto");
@@ -29,15 +36,13 @@
         <br />
         <% }%>
 
-        <form method="POST" action="/CadastroProdutos/CadastroProdutoServlet" >
+        <form method="POST" action="/e-commerce-JucemarDias/ServletProduto" >
             <%-- Vamos manter o código como campo oculto, e usar um <span> para exibí-lo na tela :) --%>
-            <input type="text" name="codigo" value="<%=produto.getCodigo()%>" hidden="hidden" />
-            Código: <span><%=produto.getCodigo()%></span> <br />
+            <input type="text" name="codigo" value="<%=produto.getIdProduto()%>" hidden="hidden" />
+            Código: <span><%=produto.getIdProduto()%></span> <br />
             Descrição: <input type="text" name="descricao" value="<%=produto.getDescricao()%>" /> <br />
-            Valor: <input type="text" name="valor" value="<%=produto.getValor()%>" /> <br />
             Quantidade: <input type="text" name="quantidade" value="<%=produto.getQuantidade()%>" /> <br />
-            Nome Fornecedor: <input type="text" name="fornecedor" value="<%=produto.getFornecedor()%>" /> <br />
-            Dt Última Compra: <input type="text" name="data" value="<%=produto.getUltimaCompraString()%>" /> <br /><br />
+            Valor: <input type="text" name="valor" value="<%=produto.getValor()%>" /> <br />
             <input type="submit" value="Salvar" />
         </form>
     </body>
