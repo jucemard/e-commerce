@@ -12,13 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ServletProduto extends HttpServlet {
 
+    
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         /*
-         Crie um método no DAO para facilitar a recuperação dos parâmetros
+          método no DAO para facilitar a recuperação dos parâmetros
          */
         Produto produto = ProdutoDAO.getProdutoParametros(req);
         try {
+            
+            
             Connection conn = (Connection) req.getAttribute("conexao");
 
             /*

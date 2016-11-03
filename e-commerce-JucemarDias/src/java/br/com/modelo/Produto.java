@@ -15,8 +15,8 @@ public class Produto {
       
     }
 
-    public Produto(int codigo, String descricao, Double quantidade, double valor) {
-        this.idProduto = idProduto;
+    public Produto(int idproduto, String descricao, Double quantidade, Double valor) {
+        this.idProduto = idproduto;
         this.descricao = descricao;
         this.quantidade = quantidade;
         this.valor = valor;
