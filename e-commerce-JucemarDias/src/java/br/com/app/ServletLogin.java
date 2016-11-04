@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import br.com.controller.LoginController;
+import javax.servlet.http.HttpSession;
 
 public class ServletLogin extends HttpServlet {
 
@@ -25,11 +26,18 @@ public class ServletLogin extends HttpServlet {
         if (LoginController.login(usuario, senha)) {
             response.addCookie(LoginController.getCookie("usuario", usuario));
             response.addCookie(LoginController.getCookie("senha", senha));
-
-            response.sendRedirect("/e-commerce-JucemarDias/cadastrarprodutos.jsp");
-        } else {
             
-            doGet(request, response);
+            HttpSession sessao = request.getSession();
+            sessao.setAttribute("usuario_logado", usuario);
+            
+            if (usuario.equals("admin")){
+                response.sendRedirect("/TrabWeb_2016/produto.jsp");
+            }else{
+                response.sendRedirect("/TrabWeb_2016/ListaCliente.jsp");
+            }
+
+        } else {
+            response.sendRedirect("/TrabWeb_2016");
         }
     }
 

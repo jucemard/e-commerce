@@ -1,5 +1,9 @@
 package br.com.modelo;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 /**
  *
  * @author Jucemar Dias
@@ -7,6 +11,7 @@ package br.com.modelo;
 public class Pedido {
     private int idPedido;
     private int idUsuario;
+    private List<ItensPedido> itens;
 
     public int getIdPedido() {
         return idPedido;
@@ -23,31 +28,29 @@ public class Pedido {
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + this.idPedido;
-        hash = 97 * hash + this.idUsuario;
-        return hash;
+        
+    public List<ItensPedido> getItens() {
+        return itens;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
+    public void setItens(List<ItensPedido> itens) {
+        this.itens = itens;
+    }
+      
+ public void adicionarProduto(ItensPedido pItem){
+        if(this.itens==null){
+            this.itens = new ArrayList<ItensPedido>();
         }
-        if (getClass() != obj.getClass()) {
-            return false;
+        this.itens.add(pItem);
+    }
+    
+    public void removerProduto(ItensPedido pedidoItemRemover){
+        for(Iterator it = itens.iterator(); it.hasNext();){
+            ItensPedido pItem = (ItensPedido) it.next();
+            if (pItem.getProduto().getIdProduto()== pedidoItemRemover.getProduto().getIdProduto()) {
+                it.remove();
+            }
         }
-        final Pedido other = (Pedido) obj;
-        if (this.idPedido != other.idPedido) {
-            return false;
-        }
-        if (this.idUsuario != other.idUsuario) {
-            return false;
-        }
-        return true;
     }
   
 }

@@ -16,6 +16,14 @@
         <servlet-name>ServletPedido</servlet-name>
         <servlet-class>br.com.app.ServletPedido</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletPesquisar</servlet-name>
+        <servlet-class>br.com.app.ServletPesquisar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletCarrinho</servlet-name>
+        <servlet-class>br.com.app.ServletCarrinho</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletLogin</servlet-name>
         <url-pattern>/ServletLogin</url-pattern>
@@ -31,6 +39,14 @@
     <servlet-mapping>
         <servlet-name>ServletPedido</servlet-name>
         <url-pattern>/ServletPedido</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletPesquisar</servlet-name>
+        <url-pattern>/ServletPesquisar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletCarrinho</servlet-name>
+        <url-pattern>/ServletCarrinho</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
