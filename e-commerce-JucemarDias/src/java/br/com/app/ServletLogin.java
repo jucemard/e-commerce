@@ -31,13 +31,13 @@ public class ServletLogin extends HttpServlet {
             sessao.setAttribute("usuario_logado", usuario);
             
             if (usuario.equals("admin")){
-                response.sendRedirect("/TrabWeb_2016/produto.jsp");
+                response.sendRedirect("/e-commerce-JucemarDias/produtos.jsp");
             }else{
-                response.sendRedirect("/TrabWeb_2016/ListaCliente.jsp");
+                response.sendRedirect("/e-commerce-JucemarDias/listarcliente.jsp");
             }
 
         } else {
-            response.sendRedirect("/TrabWeb_2016");
+            response.sendRedirect("/e-commerce-JucemarDias");
         }
     }
 

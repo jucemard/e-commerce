@@ -16,7 +16,7 @@
         <br />
         <h1>Carrinho de Compras</h1>         
         <table border="1">
-            <td colspan="5"><a href="/TrabWeb_2016/ListaCliente.jsp"><b>Continuar Comprando</b></a></td>
+            <td colspan="5"><a href="4/e-commerce-JucemarDias/listarcliente.jsp"><b>Continuar Comprando</b></a></td>
             <tr>
                 <th>Código</th>
                 <th>Produto</th>
@@ -30,10 +30,10 @@
                 <td><%= pIten.getProduto().getDescricao()%></td>
                 <td><%= pIten.getProduto().getValor()%></td>
                 <td><%= pIten.getQuantidade()%></td>
-                <td><a href="/TrabWeb_2016/ServletPedido?acao=excluirSessao&idProduto=<%= pIten.getProduto().getIdProduto()%>"><b>Excluir</b></a></td>
+                <td><a href="/e-commerce-JucemarDias/ServletPedido?acao=excluirSessao&idproduto=<%= pIten.getProduto().getIdProduto()%>"><b>Excluir</b></a></td>
             </tr>                                                               
             <% } %>
-            <td colspan="5"><a href="/TrabWeb_2016/ServletPedido?acao=comprar"><b>Efetuar Compra</b></a></td>
+            <td colspan="5"><a href="/e-commerce-JucemarDias/ServletPedido?acao=comprar"><b>Efetuar Compra</b></a></td>
         </table>
         
     </body>

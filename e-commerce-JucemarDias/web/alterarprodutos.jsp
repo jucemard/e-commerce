@@ -16,18 +16,19 @@
         
          <title>Produto</title>
     </head>
-    <body>
+     <body>
         <h1>Alterar Produto</h1>
         <% if (mensagemErro != null) {%>
         <p class="erro"><%= mensagemErro%></p>
         <% }%>
         <form action="ServletProduto" method="POST">
-            <input type="hidden" name="idProduto" value="<%=produto.getIdProduto()%>" />
+            
+            <input type="hidden" name="idproduto" value="<%=produto.getIdProduto()%>" />
             <label>Descrição</label><br />
-            <input type="text" name="produto" value="<%=produto.getDescricao()%>" />
+            <input type="text" name="descricao" value="<%=produto.getDescricao()%>" />
             <br /><br />
-            <label>Informação</label><br />
-             <input type="text" name="informacao" value="<%=produto.getQuantidade()%>" />
+            <label>Quantidade</label><br />
+             <input type="text" name="quantidade" value="<%=produto.getQuantidade()%>" />
             <br /><br />
             <label>Valor</label><br />
             <input type="text" name="valor" value="<%=produto.getValor()%>" />

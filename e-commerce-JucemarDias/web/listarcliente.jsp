@@ -25,7 +25,7 @@
         <br />
          <% if (produtos != null) { %>
         <table border="1">
-              <td><a href="/TrabWeb_2016/carrinho.jsp"><b>Ver Carrinho</b></a></td>
+              <td><a href="/e-commerce-JucemarDias/carrinho.jsp"><b>Ver Carrinho</b></a></td>
           
             <tr>
                 <th>Código</th>
@@ -39,7 +39,7 @@
                 <td><%= prod.getDescricao()%></td>
                 <td><%= prod.getQuantidade()%></td>
                 <td><%= prod.getValor()%></td>
-                <td><a href="/TrabWeb_2016/ServletPedido?acao=addProduto&idProduto=<%= prod.getIdProduto()%>"><b>Adicionar Carrinho</b></a></td>
+                <td><a href="/e-commerce-JucemarDias/ServletPedido?acao=addProduto&idproduto=<%= prod.getIdProduto()%>"><b>Adicionar Carrinho</b></a></td>
             </tr>
             <%  } %>
         </table>

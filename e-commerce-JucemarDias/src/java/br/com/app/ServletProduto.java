@@ -21,7 +21,7 @@ public class ServletProduto extends HttpServlet {
             throws ServletException, IOException {
         
         String acao = request.getParameter("acao");
-        String idProduto = request.getParameter("idProduto");
+        String idProduto = request.getParameter("idproduto");
 
         switch (acao) {
             case "listar":
@@ -106,7 +106,7 @@ public class ServletProduto extends HttpServlet {
         {
             try{
                 req.setAttribute("produto", produtoDAO.retornaProdutoId(produto));
-                req.getRequestDispatcher("/ProdutoAlt.jsp").forward(req, resp);
+                req.getRequestDispatcher("/alterarprodutos.jsp").forward(req, resp);
             }catch(SQLException ex){
                 Logger.getLogger(ServletProduto.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -63,14 +63,14 @@ public class ServletPedido extends HttpServlet {
                 pedido.adicionarProduto(pedidoItem);
             }
 
-            RequestDispatcher rd = req.getRequestDispatcher("/ListaCliente.jsp");
+            RequestDispatcher rd = req.getRequestDispatcher("/listarcliente.jsp");
             rd.forward(req, resp);
         } else if (acao.equals("excluirSessao")) {
             HttpSession sessao = req.getSession();
 
             Pedido pedido = (Pedido) sessao.getAttribute("pedido");
 
-            int idProduto = Integer.parseInt(req.getParameter("idProduto"));
+            int idProduto = Integer.parseInt(req.getParameter("idproduto"));
 
             ItensPedido pedidoItem = new ItensPedido();
             Produto produto = new Produto();
